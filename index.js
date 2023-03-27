@@ -54,19 +54,43 @@ function skor2() {
 }
 
 
+/* 
+----------------------------------------------------------------------------------------------------------
+              ******** CEVAPLAR *********** 
+1. skor1 ve skor2 arasındaki fark nedir?
+skor1 bir yüksek düzey fonksiyon kullanarak bir closure oluştururken, 
+skor2 sadece bir değişken kullanır ve bir closure oluşturmaz. 
+skor1'in içindeki fonksiyon, skor değişkenine erişerek onu artırır ve son skoru döndürür. 
+skor2 fonksiyonu, sadece skor değişkenini arttırır ve son skoru döndürür.
+-------------------------------------------------------------------------------------------------------------
+2. Hangisi bir closure kullanmaktadır? Nasıl tarif edebilirsin?
+skor1 bir closure kullanmaktadır. Closure, iç fonksiyonun dış fonksiyonun yerel değişkenlerine erişmesine ve 
+bu değişkenleri kullanmasına izin veren bir yapıdır. Bu durumda, skorGuncelle fonksiyonu, dış fonksiyon olan 
+skorArtirici'nın yerel değişkeni olan skor değişkenine erişir.
+---------------------------------------------------------------------------------------------------------
+3. Hangi durumda skor1 tercih edilebilir? Hangi durumda skor2 daha mantıklıdır?
+skor1 tercih edilebilir, çünkü daha güvenli bir yapıya sahiptir. skor1 fonksiyonu, skor değişkenine sadece 
+içindeki fonksiyon aracılığıyla erişir ve bu nedenle diğer kod bloklarından değiştirilmesi daha zordur. 
+Diğer yandan, skor2 değişkeni, tüm kod bloklarından erişilebilir ve değiştirilebilir. skor2 daha basit bir 
+yapıya sahiptir ve bu nedenle küçük programlarda daha uygun olabilir. Ancak büyük ölçekli bir programda, 
+skor değişkeninin yanlışlıkla değiştirilmesi diğer kod bloklarında istenmeyen sonuçlar doğurabilir.
+----------------------------------------------------------------------------------------------------------------------
+*/
+
 /* Görev 2: takimSkoru() 
 Aşağıdaki takimSkoru() fonksiyonununda aşağıdakileri yapınız:
   1. Bir çeyrekte bir takımın ürettiği skoru rastgele(random) elde eden bir sonuc dönünüz(return)
-  
+
   Ön Bilgi: Bir çeyrekte takımlar ortalama 10 ile 25 sayı üretebiliyor
   Örnek: takimSkoru çağrıldığında 10-25 arasında bir skor dönmeli
   
 Not: Bu fonskiyon, aşağıdaki diğer görevler için de bir callback fonksiyonu olarak da kullanılacak
 */
-
-function takimSkoru(/*Kodunuzu buraya yazınız*/){
-    /*Kodunuzu buraya yazınız*/
+let skoroluşturma="";
+function takimSkoru(){
+   return Math.floor(Math.random() * 16) + 10;
 }
+console.log( takimSkoru())
 
 
 
@@ -85,14 +109,25 @@ Aşağıdaki macSonucu() fonksiyonununda aşağıdakileri yapınız:
   "KonukTakim": 80
 }
 */ 
+console.log("GÖREV 3")
 
-function macSonucu(/*Kodunuzu buraya yazınız*/){
-  /*Kodunuzu buraya yazınız*/
+
+function macSonucu(takimSkoru, cevrekSayisi) {
+  let evSahibiSkoru = 0;
+  let konukTakimSkoru = 0;
+
+  for (let i = 1; i <= cevrekSayisi; i++) {
+    let evSahibiCeyrekSkoru = takimSkoru();
+    let konukTakimCeyrekSkoru = takimSkoru();
+    evSahibiSkoru += evSahibiCeyrekSkoru;
+    konukTakimSkoru += konukTakimCeyrekSkoru;
+  }
+
+  console.log(`Toplam Skor - Ev Sahibi: ${evSahibiSkoru} - Konuk Takım: ${konukTakimSkoru}`);
+
+  return { EvSahibi: evSahibiSkoru, KonukTakim: konukTakimSkoru };
 }
-
-
-
-
+macSonucu(takimSkoru,4);
 
 
 /* Zorlayıcı Görev 4: periyotSkoru()
@@ -108,11 +143,15 @@ Aşağıdaki periyotSkoru() fonksiyonununda aşağıdakileri yapınız:
 }
   */
 
+console.log("GÖREV 4")
 
-function periyotSkoru(/*Kodunuzu buraya yazınız*/) {
-  /*Kodunuzu buraya yazınız*/
-
-}
+function periyotSkoru(takimSkoru) {
+  let EvSahibi = takimSkoru();
+  let KonukTakim = takimSkoru();
+  return {"EvSahibi": EvSahibi, "KonukTakim": KonukTakim};
+  }
+  
+  console.log(periyotSkoru(takimSkoru));
 
 
 /* Zorlayıcı Görev 5: skorTabelasi() 
@@ -145,11 +184,32 @@ MAÇ UZAR ise skorTabelasi(periyotSkoru,takimSkoru,4)
 ]
 ] */
 // NOTE: Bununla ilgili bir test yoktur. Eğer logladığınız sonuçlar yukarıdakine benziyor ise tmamlandı sayabilirsiniz.
+console.log("GÖREV 5")
 
-function skorTabelasi(/*Kodunuzu buraya yazınız*/) {
-  /*Kodunuzu buraya yazınız*/
+
+function skorTabelasi(takimSkoru, cevrekSayisi) {
+  let evSahibiSkoru = 0;
+  let konukTakimSkoru = 0;
+
+  for (let i = 1; i <= cevrekSayisi; i++) {
+    let evSahibiCeyrekSkoru = takimSkoru();
+    let konukTakimCeyrekSkoru = takimSkoru();
+    evSahibiSkoru += evSahibiCeyrekSkoru;
+    konukTakimSkoru += konukTakimCeyrekSkoru;
+
+    if (i <= 4) {
+      console.log(`Çeyrek ${i} - Ev Sahibi: ${evSahibiCeyrekSkoru} - Konuk Takım: ${konukTakimCeyrekSkoru}`);
+    } else if (i > 4) {
+      console.log(`Uzatma ${i - 4} - Ev Sahibi: ${evSahibiCeyrekSkoru} - Konuk Takım: ${konukTakimCeyrekSkoru}`);
+    }
+  }
+
+  console.log(`Toplam Skor - Ev Sahibi: ${evSahibiSkoru} - Konuk Takım: ${konukTakimSkoru}`);
+
+  return { EvSahibi: evSahibiSkoru, KonukTakim: konukTakimSkoru };
 }
 
+skorTabelasi(takimSkoru, 5);
 
 
 
